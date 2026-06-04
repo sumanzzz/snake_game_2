@@ -54,7 +54,7 @@ int main()
 {
 
 
-    /*vector<vector<int>> Board(ROWS, vector<int>(COLS, 0));
+    vector<vector<int>> Board(ROWS, vector<int>(COLS, 0));
 
     vector<pair<int, int>> snake =
     {
@@ -68,7 +68,7 @@ int main()
     }
 
     generateFood(Board);
-    drawBoard(Board);
+    /*drawBoard(Board);
     while (true) {
         clearBoard(Board);
         bool foodEaten = false;
@@ -127,9 +127,23 @@ int main()
         
 
         window.clear();
-        sf::RectangleShape rect(sf::Vector2f(30.f, 30.f));
-        rect.setPosition(sf::Vector2f(100.f, 100.f));
-        window.draw(rect);
+        for (int row = 0; row < ROWS; row++) {
+            for (int col = 0; col < COLS; col++) {
+                sf::RectangleShape cell(sf::Vector2f(30.f, 30.f));
+                cell.setPosition(sf::Vector2f(col*30.f, row*30.f));
+
+                if (Board[row][col] == 1) {
+                    cell.setFillColor(sf::Color::Red);
+                }
+                else if (Board[row][col] == 2) {
+                    cell.setFillColor(sf::Color::Green);
+                }
+                else cell.setFillColor(sf::Color::Black);
+                window.draw(cell);
+            }
+        }
+        
+        
         window.display();
     }
 
