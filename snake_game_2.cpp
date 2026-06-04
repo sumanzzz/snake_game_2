@@ -143,21 +143,47 @@ int main()
                 window.draw(cell);
             }
         }
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W) && dir != DOWN){
+            dir = UP;
+        }
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S) && dir != UP) {
+            dir = DOWN;
+        }
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A) && dir != RIGHT) {
+            dir = LEFT;
+        }
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D) && dir != LEFT) {
+            dir = RIGHT;
+        }
 
         if (clock.getElapsedTime().asSeconds() > 0.2f) {
             int newRow = snake.back().first;
-            int newCol = snake.back().second + 1;
+            int newCol = snake.back().second;
 
-            snake.push_back({ newRow, newCol });
-            snake.erase(snake.begin());
-            
+            switch (dir)
+            {
+            case UP: newRow--;
+                break;
+            case DOWN: newRow++;
+                break;
+            case LEFT: newCol--;
+                break;
+            case RIGHT: newCol++;
+                break;
+            default:
+                break;
+            }
+
             if (newRow < 0 || newRow >= ROWS ||
                 newCol < 0 || newCol >= COLS)
             {
                 cout << "GAME OVER\n";
                 break;
             }
-
+            snake.push_back({ newRow, newCol });
+            snake.erase(snake.begin());
+            
+            
             clock.restart();
         }
         clearBoard(Board);
