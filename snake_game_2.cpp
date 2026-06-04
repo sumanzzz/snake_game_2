@@ -7,8 +7,8 @@
 
 using namespace std;
 
-const int ROWS = 25;
-const int COLS = 25;
+const int ROWS = 20;
+const int COLS = 20;
 
 //srand(time(0));
 int foodRow, foodCol;
@@ -27,16 +27,6 @@ void clearBoard(vector<vector<int>>& Board) {
         }
     }
 }
-//void drawBoard(vector<vector<int>>& Board) {
-//    for (int i = 0; i < ROWS; i++) {
-//        for (int j = 0; j < COLS; j++) {
-//            cout << Board[i][j] << "  ";
-//        }
-//        cout << endl;
-//        cout << endl;
-//    }
-//}
-
 
 void generateFood(vector<vector<int>>& Board) {
     
@@ -52,8 +42,6 @@ void generateFood(vector<vector<int>>& Board) {
 }
 int main()
 {
-
-
     vector<vector<int>> Board(ROWS, vector<int>(COLS, 0));
 
     vector<pair<int, int>> snake =
@@ -68,52 +56,7 @@ int main()
     }
 
     generateFood(Board);
-    //drawBoard(Board);
-    /*while (true) {
-        clearBoard(Board);
-        bool foodEaten = false;
-        char move;
-        cin >> move;
-        if (move == 'w') dir = UP;
-        else if (move == 's') dir = DOWN;
-        else if (move == 'a') dir = LEFT;
-        else if (move == 'd') dir = RIGHT;
-
-        int newRow = snake.back().first;
-        int newCol = snake.back().second;
-
-        switch (dir)
-        {
-        case UP: newRow--;
-            break;
-        case DOWN: newRow++;
-            break;
-        case LEFT: newCol--;
-            break;
-        case RIGHT: newCol++;
-            break;
-        default:
-            break;
-        }
-        if (newRow < 0 || newRow > ROWS || newCol < 0 || newCol > COLS) {
-            cout << "Game Over !" << endl;
-            break;
-        }
-        if (Board[newRow][newCol] != 2) {
-            snake.push_back({ newRow , newCol });
-            snake.erase(snake.begin());
-        }
-        else {
-            snake.push_back({ newRow , newCol });
-            generateFood(Board);
-        }
-
-        for (auto segment : snake) {
-            Board[segment.first][segment.second] = 1;
-        }
-
-        drawBoard(Board);
-    }*/
+    
     sf::RenderWindow window(sf::VideoMode({ 800 , 600 }), "Snake");
     sf::Clock clock;
 
@@ -180,8 +123,14 @@ int main()
                 cout << "GAME OVER\n";
                 break;
             }
-            snake.push_back({ newRow, newCol });
-            snake.erase(snake.begin());
+            if (Board[newRow][newCol] != 2) {
+                snake.push_back({ newRow , newCol });
+                snake.erase(snake.begin());
+            }
+            else {
+                snake.push_back({ newRow , newCol });
+                generateFood(Board);
+            }
             
             
             clock.restart();
@@ -194,10 +143,7 @@ int main()
         }
         Board[foodRow][foodCol] = 2;
 
-        
-        
-        
-        
+      
         window.display();
     }
 
