@@ -7,11 +7,11 @@
 
 using namespace std;
 
-const int ROWS = 10;
-const int COLS = 10;
+const int ROWS = 25;
+const int COLS = 25;
 
 //srand(time(0));
-
+int foodRow, foodCol;
 enum Direction {
     UP,
     DOWN,
@@ -27,19 +27,19 @@ void clearBoard(vector<vector<int>>& Board) {
         }
     }
 }
-void drawBoard(vector<vector<int>>& Board) {
-    for (int i = 0; i < ROWS; i++) {
-        for (int j = 0; j < COLS; j++) {
-            cout << Board[i][j] << "  ";
-        }
-        cout << endl;
-        cout << endl;
-    }
-}
+//void drawBoard(vector<vector<int>>& Board) {
+//    for (int i = 0; i < ROWS; i++) {
+//        for (int j = 0; j < COLS; j++) {
+//            cout << Board[i][j] << "  ";
+//        }
+//        cout << endl;
+//        cout << endl;
+//    }
+//}
 
 
 void generateFood(vector<vector<int>>& Board) {
-    int foodRow, foodCol;
+    
     while (true) {
         foodRow = rand() % ROWS;
         foodCol = rand() % COLS;
@@ -68,8 +68,8 @@ int main()
     }
 
     generateFood(Board);
-    /*drawBoard(Board);
-    while (true) {
+    //drawBoard(Board);
+    /*while (true) {
         clearBoard(Board);
         bool foodEaten = false;
         char move;
@@ -115,7 +115,8 @@ int main()
         drawBoard(Board);
     }*/
     sf::RenderWindow window(sf::VideoMode({ 800 , 600 }), "Snake");
-   
+    sf::Clock clock;
+
     while (window.isOpen())
     {
         while (const auto event = window.pollEvent())
@@ -142,6 +143,33 @@ int main()
                 window.draw(cell);
             }
         }
+
+        if (clock.getElapsedTime().asSeconds() > 0.2f) {
+            int newRow = snake.back().first;
+            int newCol = snake.back().second + 1;
+
+            snake.push_back({ newRow, newCol });
+            snake.erase(snake.begin());
+            
+            if (newRow < 0 || newRow >= ROWS ||
+                newCol < 0 || newCol >= COLS)
+            {
+                cout << "GAME OVER\n";
+                break;
+            }
+
+            clock.restart();
+        }
+        clearBoard(Board);
+
+        for (auto segment : snake)
+        {
+            Board[segment.first][segment.second] = 1;
+        }
+        Board[foodRow][foodCol] = 2;
+
+        
+        
         
         
         window.display();
