@@ -118,7 +118,7 @@ int main()
             }
 
             if (newRow < 0 || newRow >= ROWS ||
-                newCol < 0 || newCol >= COLS)
+                newCol < 0 || newCol >= COLS || Board[newRow][newCol] == 1)
             {
                 cout << "GAME OVER\n";
                 break;
