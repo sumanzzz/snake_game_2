@@ -58,6 +58,3 @@ This project is the second stage in my Snake game series:
 2. **Snake Game 2** — SFML Graphics Version
 3. **Snake Game 3** — Raylib 3D Version with a BFS-powered AI opponent
 
-## 📝 License
-
-This project is open source and available under the MIT License.
