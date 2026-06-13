@@ -31,7 +31,6 @@ A classic Snake game built with C++ and SFML, featuring real-time rendering, foo
 * C++
 * SFML
 * STL (`vector`, `pair`)
-* Object-Oriented Programming
 * Game Loop Architecture
 
 ##  Implementation Details
